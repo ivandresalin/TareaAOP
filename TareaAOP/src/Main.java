@@ -2,10 +2,25 @@ import adapters.PdfPrinterAdapter;
 import adapters.ThermalPrinterAdapter;
 import config.ConfigurationManager;
 import interfaces.Printer;
+import printers.PdfPrinter;
+import printers.ThermalPrinter;
 import printing.ReportPrinter;
 
 public class Main {
     public static void main(String[] args) {
+
+        // prueba Seccion 2
+
+        Printer printer1 = new PdfPrinter();
+        printer1.print("Factura digital generada");
+
+        Printer printer2 = new ThermalPrinter();
+        printer2.print("Ticket de compra generado");
+
+
+
+        // Prueba seccion 1
+        /* 
         ConfigurationManager config = ConfigurationManager.getInstance();
 
         // Prueba 1: Imprimir usando PDF
@@ -36,6 +51,11 @@ public class Main {
 
         ReportPrinter reportPrinter = new ReportPrinter(printer);
         reportPrinter.printReport(contenido);
-        System.out.println(); // Línea en blanco para separar pruebas
+        System.out.println();
+
+        */
+
+        
+
     }
 }
