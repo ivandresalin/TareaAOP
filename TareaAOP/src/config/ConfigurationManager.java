@@ -1,30 +1,33 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package config;
 
-/**
- *
- * @author ivand
- */
+import java.util.HashMap;
+import java.util.Map;
+
+// Patrón Singleton
 public class ConfigurationManager {
-    private static ConfigurationManager instance;
-    private String printerType = "PDF";
+    private static ConfigurationManager instance = null;
+    private Map<String, String> config;
 
-    private ConfigurationManager() {}
+    private ConfigurationManager() {
+        config = new HashMap<>();
+    }
 
-    public static synchronized ConfigurationManager getInstance() {
-        if (instance == null)
+    public static ConfigurationManager getInstance() {
+        if (instance == null) {
             instance = new ConfigurationManager();
+        }
         return instance;
     }
 
-    public String getPrinterType() {
-        return printerType;
+    public void set(String key, String value) {
+        config.put(key, value);
     }
 
-    public void setPrinterType(String type) {
-        printerType = type;
+    public String get(String key) {
+        return config.get(key);
+    }
+
+    public String getPrinterType() {
+        return get("printer");
     }
 }

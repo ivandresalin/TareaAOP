@@ -4,10 +4,6 @@
  */
 package interfaces;
 
-/**
- *
- * @author ivand
- */
 public interface Printer {
     void print(String content);
 }

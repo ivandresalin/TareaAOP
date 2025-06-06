@@ -1,12 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
-
-/**
- *
- * @author ivand
- */
 import adapters.PdfPrinterAdapter;
 import adapters.ThermalPrinterAdapter;
 import config.ConfigurationManager;
@@ -16,16 +7,35 @@ import printing.ReportPrinter;
 public class Main {
     public static void main(String[] args) {
         ConfigurationManager config = ConfigurationManager.getInstance();
-        config.set("printer", "pdf");
 
+        // Prueba 1: Imprimir usando PDF
+        config.set("printer", "pdf");
+        ejecutarPrueba("Reporte de ventas", config);
+
+        // Prueba 2: Imprimir usando Thermal
+        config.set("printer", "thermal");
+        ejecutarPrueba("Factura N°123", config);
+
+        // Prueba 3: Valor inválido (debe manejarse con un mensaje)
+        config.set("printer", "laser");  // Tipo no soportado
+        ejecutarPrueba("Documento importante", config);
+    }
+
+    private static void ejecutarPrueba(String contenido, ConfigurationManager config) {
         Printer printer;
-        if (config.get("printer").equals("pdf")) {
+        String type = config.getPrinterType();
+
+        if (type.equalsIgnoreCase("pdf")) {
             printer = new PdfPrinterAdapter();
-        } else {
+        } else if (type.equalsIgnoreCase("thermal")) {
             printer = new ThermalPrinterAdapter();
+        } else {
+            System.out.println("[ERROR] Tipo de impresora '" + type + "' no soportado.\n");
+            return;
         }
 
-        ReportPrinter rp = new ReportPrinter(printer);
-        rp.printReport("Este es el reporte generado.");
+        ReportPrinter reportPrinter = new ReportPrinter(printer);
+        reportPrinter.printReport(contenido);
+        System.out.println(); // Línea en blanco para separar pruebas
     }
 }
