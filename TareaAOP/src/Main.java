@@ -10,17 +10,22 @@
 import adapters.PdfPrinterAdapter;
 import adapters.ThermalPrinterAdapter;
 import config.ConfigurationManager;
+import interfaces.Printer;
 import printing.ReportPrinter;
 
 public class Main {
     public static void main(String[] args) {
-        ConfigurationManager.getInstance().setPrinterType("Térmica");
+        ConfigurationManager config = ConfigurationManager.getInstance();
+        config.set("printer", "pdf");
 
-        ReportPrinter printer1 = new ReportPrinter(new ThermalPrinterAdapter());
-        printer1.printReport("Reporte de Ventas");
+        Printer printer;
+        if (config.get("printer").equals("pdf")) {
+            printer = new PdfPrinterAdapter();
+        } else {
+            printer = new ThermalPrinterAdapter();
+        }
 
-        ConfigurationManager.getInstance().setPrinterType("PDF");
-        ReportPrinter printer2 = new ReportPrinter(new PdfPrinterAdapter());
-        printer2.printReport("Reporte Financiero");
+        ReportPrinter rp = new ReportPrinter(printer);
+        rp.printReport("Este es el reporte generado.");
     }
 }
